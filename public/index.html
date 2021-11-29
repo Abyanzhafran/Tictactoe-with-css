@@ -16,21 +16,27 @@
         <span class="text-white text-5xl font-bold">Tic Tac Tuing</span>
       </div>
       <div class="grid grid-cols-3 gap-2">
-        <div class="w-24 h-24 bg-white rounded-2xl" id="0"></div>
-        <div class="w-24 h-24 bg-white rounded-2xl" id="1"></div>
-        <div class="w-24 h-24 bg-white rounded-2xl" id="0"></div>
+        <button class="cell w-24 h-24 bg-white rounded-2xl hover:bg-gray-300 text-6xl" id="0"></button>
+        <button class="cell w-24 h-24 bg-white rounded-2xl hover:bg-gray-300 text-6xl" id="1"></button>
+        <button class="cell w-24 h-24 bg-white rounded-2xl hover:bg-gray-300 text-6xl" id="2"></button>
 
-        <div class="w-24 h-24 bg-white rounded-2xl" id="0"></div>
-        <div class="w-24 h-24 bg-white rounded-2xl" id="0"></div>
-        <div class="w-24 h-24 bg-white rounded-2xl" id="0"></div>
+        <button class="cell w-24 h-24 bg-white rounded-2xl hover:bg-gray-300 text-6xl" id="3"></button>
+        <button class="cell w-24 h-24 bg-white rounded-2xl hover:bg-gray-300 text-6xl" id="4"></button>
+        <button class="cell w-24 h-24 bg-white rounded-2xl hover:bg-gray-300 text-6xl" id="5"></button>
 
-        <div class="w-24 h-24 bg-white rounded-2xl" id="0"></div>
-        <div class="w-24 h-24 bg-white rounded-2xl" id="0"></div>
-        <div class="w-24 h-24 bg-white rounded-2xl" id="0"></div>
+        <button class="cell w-24 h-24 bg-white rounded-2xl hover:bg-gray-300 text-6xl" id="6"></button>
+        <button class="cell w-24 h-24 bg-white rounded-2xl hover:bg-gray-300 text-6xl" id="7"></button>
+        <button class="cell w-24 h-24 bg-white rounded-2xl hover:bg-gray-300 text-6xl" id="8"></button>
+      </div>
+      <div class="pt-10">
+        <button class="bg-red-400 active:bg-red-700 text-white p-2 rounded-lg font-bold" onclick="startIt()">
+          Replay
+        </button>
       </div>
     </div>
   </div>
 
+  <script src=" /public/js/turn.js"></script>
 </body>
 
 </html>
