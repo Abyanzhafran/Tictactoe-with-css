@@ -16,6 +16,7 @@ const cells = document.querySelectorAll('.cell')
 startIt()
 
 function startIt() {
+  document.querySelector('.endgame').style.display = 'none'
   board = Array.from(Array(9).keys())
   for (let i = 0; i < cells.length; i++) {
     cells[i].innerText = ''
@@ -28,27 +29,26 @@ function ifClick(square) {
   if (typeof board[square.target.id] == 'number') {
     board[square.target.id] = player1
     document.getElementById(square.target.id).innerText = player1
-    secVer(board)
   }
-  // console.log(board)
-  // console.log(secVer(board))
+  checkIfWin(board)
 }
 
-function secVer(arr) {
+function checkIfWin(arr, player) {
   ifClick
   for (let i = 0; i < combos.length; i++) {
     let checkVal = combos[i].filter(x => !arr.includes(x))
     if (checkVal.length > 2) {
-      return alert('you winn boyy')
+      gameOver(player2)
     }
   }
 }
 
-// function checkIfWin() {
-//   for (let i = 0; i < combos.length; i++) {
-//     let checkVal = combos[i].filter(x => arr.includes(x))
-//     if (checkVal.length == arr.length) {
-//       return alert("you win boyy")
-//     }
-//   }
-// }
+function gameOver(whoWon) {
+  declareWin(whoWon.player == player1 ? 'p2 win' : 'p1 win')
+}
+
+function declareWin(who) {
+  document.querySelector(".endgame").style.display = 'block'
+  document.querySelector('.endgame .text-winner').innerText = who
+}
+
