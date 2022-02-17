@@ -1,6 +1,7 @@
 var board;
 const player1 = 'O';
 const player2 = 'X';
+const currPlayer = player1;
 const combos = [
   [0, 1, 2],
   [3, 4, 5],
@@ -10,7 +11,6 @@ const combos = [
   [2, 5, 8],
   [0, 4, 8],
   [6, 4, 2],
-  [6, 4, 2]
 ]
 
 const cells = document.querySelectorAll('.cell')
@@ -19,38 +19,45 @@ startIt()
 function startIt() {
   document.querySelector('.endgame').style.display = 'none'
   board = Array.from(Array(9).keys())
-  // console.log(board)
   for (let i = 0; i < cells.length; i++) {
     cells[i].innerText = ''
     cells[i].style.removeProperty('background-color')
-    cells[i].addEventListener('click', ifClick, false)
+    cells[i].addEventListener('click', ifClick)
+    // console.log(cells[i])
   }
 }
 
+// change this to change the player is click
+// run bestMove() HERE !!!
 function ifClick(square) {
   if (typeof board[square.target.id] == 'number') {
     board[square.target.id] = player1
     document.getElementById(square.target.id).innerText = player1
-    // if (!checkIfWin(board, player1) && )
     checkIfWin(board)
-    // console.log(board)
+    minimax(board)
+    // if (!checkIfWin(board, player1) && bestSpot())
   }
 }
 
-function checkIfWin(arr, player) {
-  ifClick
+function checkIfWin(arrBoard) {
+  // get updated array value (DONT DELETE THIS...!!!)
+  // for (let i = 0; i < cells.length; i++) {
+  //   cells[i].innerText = Object.values(arrBoard[i])
+  //   cells[i].style.removeProperty('background-color')
+  // }
+
+
   let newP1 = []
   let newP2 = []
 
-  for (let j = 0; j < combos.length; j++) {
-    if (arr[j] == 'O') { newP1.push(j) }
-    if (arr[j] == 'X') { newP2.push(j) }
+  for (let j = 0; j < arrBoard.length; j++) {
+    if (arrBoard[j] == 'O') { newP1.push(j) }
+    if (arrBoard[j] == 'X') { newP2.push(j) }
   }
 
   for (let i = 0; i < combos.length; i++) {
     let checkP1 = combos[i].filter(x => newP1.includes(x))
     let checkP2 = combos[i].filter(e => newP2.includes(e))
-    console.log(checkP1)
 
     if (checkP1.length > 2) {
       gameOver(player1)
@@ -60,30 +67,98 @@ function checkIfWin(arr, player) {
   }
 }
 
-// old thing but important
-// function checkIfWin(arr, player) {
-//   ifClick
-//   for (let i = 0; i < combos.length; i++) {
-//     let checkVal = combos[i].filter(x => !arr.includes(x))
-//     if (checkVal.length > 2) {
-//       gameOver(player1)
-//     }
-//   }
-// }
-
 function gameOver(whoWon) {
   declareWin(whoWon == player1 ? 'p1 win' : 'p2 win')
-}
-
-// blum dipake
-function bestSpot() {
-  return minimax(board, player2).index
 }
 
 function declareWin(who) {
   document.querySelector(".endgame").style.display = 'block'
   document.querySelector('.endgame .text-winner').innerText = who
 }
+
+function findEmptyBoard() {
+  return board.filter(x => typeof x == 'number')
+}
+
+function minimax(arrBoard) {
+  var emptyBoard = findEmptyBoard()
+  var newP1 = []
+  var newP2 = []
+  var stackPos = []
+  var score = 0
+
+  for (let j = 0; j < arrBoard.length; j++) {
+    if (arrBoard[j] == 'O') { newP1.push(j) }
+    if (arrBoard[j] == 'X') { newP2.push(j) }
+    // console.log(arrBoard)
+  }
+
+  for (let i = 0; i < combos.length; i++) {
+    let checkWinP2 = combos[i].filter(x => emptyBoard.includes(x))
+
+    if (checkWinP2.length > 2) {
+      if (combos[i].map(x => arrBoard.includes(x))) {
+        console.log(arrBoard = combos[i])
+
+      }
+    }
+  }
+
+}
+
+// MY OWN BEST MOVE FUNCTION
+// let scores = {
+//   'X': 1,
+//   'O': -1,
+//   'tie': 0
+// }
+
+// function bestMove(arrBoard) {
+//   let bestScore = -Infinity
+//   let move
+
+//   for (let i = 0; i < arrBoard.length; i++) {
+//     // is the square available ??
+
+//     if ((typeof arrBoard[i] !== 'number') || (arrBoard[i] !== player1)) {
+//       arrBoard[i] = player2
+//       arrBoard = ''
+//       bestMove(arrBoard)
+//     }
+//   }
+// }
+
+// function minimax(arrBoard, depth, isMax) {
+//   let result = arrBoard
+//   if (result !== null) {
+//     return scores[result]
+//   }
+
+//   if (isMax) {
+//     let bestScore = -Infinity
+
+//     if (typeof arrBoard[i] == 'number') {
+//       arrBoard[i] = player2
+//       let score = minimax(arrBoard, depth + 1, false)
+//       arrBoard[i] = ''
+//       bestScore = max(score, bestScore)
+//     }
+
+//     return bestScore
+
+//   } else {
+//     let bestScore = Infinity
+
+//     if (typeof arrBoard[i] == 'number') {
+//       arrBoard[i] = player2
+//       let score = minimax(arrBoard, depth + 1, true)
+//       arrBoard[i] = ''
+//       bestScore = min(score, bestScore)
+//     }
+
+//     return bestScore
+//   }
+// }
 
 // belum dipake
 // function tieGame(board) {
@@ -99,55 +174,3 @@ function declareWin(who) {
 //     alert('tie game')
 //   }
 // }
-
-// belum dipake
-function minimax(newBoard, player) {
-  var availSpots = emptySquares();
-
-  if (checkWin(newBoard, huPlayer)) {
-    return { score: -10 };
-  } else if (checkWin(newBoard, aiPlayer)) {
-    return { score: 10 };
-  } else if (availSpots.length === 0) {
-    return { score: 0 };
-  }
-  var moves = [];
-  for (var i = 0; i < availSpots.length; i++) {
-    var move = {};
-    move.index = newBoard[availSpots[i]];
-    newBoard[availSpots[i]] = player;
-
-    if (player == aiPlayer) {
-      var result = minimax(newBoard, huPlayer);
-      move.score = result.score;
-    } else {
-      var result = minimax(newBoard, aiPlayer);
-      move.score = result.score;
-    }
-
-    newBoard[availSpots[i]] = move.index;
-
-    moves.push(move);
-  }
-
-  var bestMove;
-  if (player === aiPlayer) {
-    var bestScore = -10000;
-    for (var i = 0; i < moves.length; i++) {
-      if (moves[i].score > bestScore) {
-        bestScore = moves[i].score;
-        bestMove = i;
-      }
-    }
-  } else {
-    var bestScore = 10000;
-    for (var i = 0; i < moves.length; i++) {
-      if (moves[i].score < bestScore) {
-        bestScore = moves[i].score;
-        bestMove = i;
-      }
-    }
-  }
-
-  return moves[bestMove]
-}
