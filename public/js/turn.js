@@ -40,13 +40,6 @@ function ifClick(square) {
 }
 
 function checkIfWin(arrBoard) {
-  // get updated array value (DONT DELETE THIS...!!!)
-  // for (let i = 0; i < cells.length; i++) {
-  //   cells[i].innerText = Object.values(arrBoard[i])
-  //   cells[i].style.removeProperty('background-color')
-  // }
-
-
   let newP1 = []
   let newP2 = []
 
@@ -84,13 +77,20 @@ function minimax(arrBoard) {
   var emptyBoard = findEmptyBoard()
   var newP1 = []
   var newP2 = []
-  var stackPos = []
-  var score = 0
+  var availBoard = []
 
   for (let j = 0; j < arrBoard.length; j++) {
     if (arrBoard[j] == 'O') { newP1.push(j) }
     if (arrBoard[j] == 'X') { newP2.push(j) }
-    // console.log(arrBoard)
+
+    if (typeof arrBoard[j] == 'number' || arrBoard[j] !== player1) {
+      arrBoard[j] = player2
+    }
+  }
+
+  for (let i = 0; i < cells.length; i++) {
+    cells[i].innerText = arrBoard[i]
+    cells[i].style.removeProperty('background-color')
   }
 
   for (let i = 0; i < combos.length; i++) {
@@ -98,13 +98,36 @@ function minimax(arrBoard) {
 
     if (checkWinP2.length > 2) {
       if (combos[i].map(x => arrBoard.includes(x))) {
-        console.log(arrBoard = combos[i])
-
+        availBoard.push(combos[i])
       }
     }
   }
 
+  // console.log(typeof availBoard)
+  for (let i = 0; i < availBoard.length; i++) {
+    // if (availBoard[i].filter(x => typeof x == 'number')) {
+    //   availBoard[i] = player2
+    // }
+    for (let j = 0; j < availBoard[i].length; j++) {
+      // console.log(availBoard[i][j])
+      if (typeof availBoard[i][j] == 'number') {
+        availBoard[i][j] = player2
+      }
+    }
+  }
+
+  // console.log(availBoard)
 }
+
+// function bestMove(arrBoard) {
+//   for (let i = 0; i < arrBoard.length; i++) {
+//     // is the square available ??
+//     if ((typeof arrBoard[i] !== 'number') || (arrBoard[i] !== player1)) {
+//       arrBoard[i] = player2
+//       arrBoard = ''
+//     }
+//   }
+// }
 
 // MY OWN BEST MOVE FUNCTION
 // let scores = {
@@ -174,3 +197,6 @@ function minimax(arrBoard) {
 //     alert('tie game')
 //   }
 // }
+
+// # TO-DO
+// make a function that generate new click for AI player based on avail arrBoard
