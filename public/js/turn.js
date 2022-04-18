@@ -1,7 +1,6 @@
 var board;
 const player1 = 'O';
 const player2 = 'X';
-const currPlayer = player1;
 const combos = [
   [0, 1, 2],
   [3, 4, 5],
@@ -12,31 +11,48 @@ const combos = [
   [0, 4, 8],
   [6, 4, 2],
 ]
+var player2Turn = false
 
 const cells = document.querySelectorAll('.cell')
 startIt()
 
 function startIt() {
   document.querySelector('.endgame').style.display = 'none'
+  document.querySelector('.change').style.display = 'none'
+
   board = Array.from(Array(9).keys())
   for (let i = 0; i < cells.length; i++) {
     cells[i].innerText = ''
     cells[i].style.removeProperty('background-color')
     cells[i].addEventListener('click', ifClick)
-    // console.log(cells[i])
   }
 }
 
-// change this to change the player is click
-// run bestMove() HERE !!!
-function ifClick(square) {
-  if (typeof board[square.target.id] == 'number') {
-    board[square.target.id] = player1
-    document.getElementById(square.target.id).innerText = player1
-    checkIfWin(board)
-    minimax(board)
-    // if (!checkIfWin(board, player1) && bestSpot())
+function ifClick(square, player) {
+  swapClick()
+  if (player2Turn == false) {
+    player = player1
+  } else {
+    player = player2
   }
+  if (typeof board[square.target.id] == 'number') {
+    board[square.target.id] = player
+    document.getElementById(square.target.id).innerText = player
+    checkIfWin(board)
+  }
+}
+
+function swapClick() {
+  player2Turn = !player2Turn
+}
+
+function changePlayer(player) {
+  player == player1 ? clicked(player1) : clicked(player2)
+}
+
+function changeText(who) {
+  document.querySelector('.change').style.display = 'block'
+  document.querySelector('.change .text-change').innerText = who
 }
 
 function checkIfWin(arrBoard) {
@@ -67,8 +83,4 @@ function gameOver(whoWon) {
 function declareWin(who) {
   document.querySelector(".endgame").style.display = 'block'
   document.querySelector('.endgame .text-winner').innerText = who
-}
-
-function findEmptyBoard() {
-  return board.filter(x => typeof x == 'number')
 }
