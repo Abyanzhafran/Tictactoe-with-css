@@ -32,8 +32,10 @@ function ifClick(square, player) {
   swapClick()
   if (player2Turn == false) {
     player = player1
+    changeText(player2)
   } else {
     player = player2
+    changeText(player1)
   }
   if (typeof board[square.target.id] == 'number') {
     board[square.target.id] = player
@@ -46,13 +48,9 @@ function swapClick() {
   player2Turn = !player2Turn
 }
 
-function changePlayer(player) {
-  player == player1 ? clicked(player1) : clicked(player2)
-}
-
 function changeText(who) {
   document.querySelector('.change').style.display = 'block'
-  document.querySelector('.change .text-change').innerText = who
+  document.querySelector('.change .text-change').innerText = who + ' is' + ' turn'
 }
 
 function checkIfWin(arrBoard) {
@@ -77,7 +75,7 @@ function checkIfWin(arrBoard) {
 }
 
 function gameOver(whoWon) {
-  declareWin(whoWon == player1 ? 'p1 win' : 'p2 win')
+  declareWin(whoWon == player1 ? 'O win' : 'X win')
 }
 
 function declareWin(who) {
