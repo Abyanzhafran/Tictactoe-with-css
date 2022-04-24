@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic Tac Tuing</title>
+  <link rel="stylesheet" href="public/css/style.css">
+</head>
+
+<body class="bg-gray-800 w-screen h-screen">
+  <div class="flex flex-col items-center justify-center w-screen h-screen gap-6">
+    <div class="items-center">
+      <span class="text-white font-bold text-2xl">Input 1 LETTER for your player</span>
+    </div>
+    <div class="flex flex-col rounded gap-6">
+      <div>
+        <div class="pb-2">
+          <span class="text-white font-bold text-xl">Player 1</span>
+        </div>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="player_1" type="text" placeholder="player 1 name" required="required">
+      </div>
+      <div>
+        <div class="pb-2">
+          <span class="text-white font-bold text-xl">Player 2</span>
+        </div>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="player_2" type="text" placeholder="player 2 name" required="required">
+      </div>
+      <button id="goToStart" class="bg-green-400 active:bg-green-700 text-white p-2 rounded-lg font-bold"
+        onclick="startIt()">
+        Start
+      </button>
+    </div>
+  </div>
+
+  <script src=" /public/js/turn.js"></script>
+</body>
+
+</html>

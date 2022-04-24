@@ -1,6 +1,6 @@
 var board;
-const player1 = 'O';
-const player2 = 'X';
+// const player1 = 'O';
+// const player2 = 'X';
 const combos = [
   [0, 1, 2],
   [3, 4, 5],
@@ -16,9 +16,26 @@ var player2Turn = false
 const cells = document.querySelectorAll('.cell')
 startIt()
 
+function readPlayer() {
+  var player1 = document.getElementById('player_1').value
+  var player2 = document.getElementById('player_2').value
+
+  if (player1 == '' || player2 == '') {
+    alert('harus diisi')
+  } else {
+    document.querySelector('#goToStart').addEventListener('click', () => {
+      window.location.href = 'http://127.0.0.1:5501/index.html'
+    })
+  }
+  // alert(player1 + player2)
+  // console.log(player1)
+  // console.log(player2)
+}
+
 function startIt() {
-  document.querySelector('.endgame').style.display = 'none'
-  document.querySelector('.change').style.display = 'none'
+  readPlayer()
+  // document.querySelector('.endgame').style.display = 'none'
+  // document.querySelector('.change').style.display = 'none'
 
   board = Array.from(Array(9).keys())
   for (let i = 0; i < cells.length; i++) {
@@ -29,6 +46,7 @@ function startIt() {
 }
 
 function ifClick(square, player) {
+  console.log(player)
   swapClick()
   if (player2Turn == false) {
     player = player1
@@ -37,6 +55,7 @@ function ifClick(square, player) {
     player = player2
     changeText(player1)
   }
+
   if (typeof board[square.target.id] == 'number') {
     board[square.target.id] = player
     document.getElementById(square.target.id).innerText = player
